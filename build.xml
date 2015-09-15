@@ -1,5 +1,7 @@
 <project name="Exercise" basedir="." default="test">
 
+    <property file="ant.properties" />
+
     <property name="src.dir"     value="src"/>
 
     <property name="build.dir"   value="build"/>
@@ -8,7 +10,12 @@
 
     <property name="main-class"  value="com.ghe.exercise.HelloWorld"/>
 
-
+    <path id="project.class.path">
+        <pathelement path="${classpath}"/>
+        <fileset dir="${log4j.libs.dir}">
+          <include name="*.jar"/>
+        </fileset>
+    </path>
 
     <target name="clean">
         <delete dir="${build.dir}"/>
@@ -16,7 +23,9 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
+    	<javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}">
+    	    <classpath refid="project.class.path"/>
+    	</javac>
     </target>
 
     <target name="jar" depends="compile">
@@ -29,7 +38,10 @@
     </target>
 
     <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <classpath refid="project.class.path"/>
+      	</java>
+    	
     </target>
 
     <target name="clean-build" depends="clean,jar"/>
