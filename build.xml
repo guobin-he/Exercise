@@ -7,17 +7,44 @@
     <property name="build.dir"   value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
+    <property name="deliverable_jar"     value="${jar.dir}/${ant.project.name}.jar"/>
+
+    <property name="log.dir"     value="${basedir}/log"/>
 
     <property name="main-class"  value="com.ghe.exercise.HelloWorld"/>
 
     <path id="project.class.path">
-        <pathelement path="${classpath}"/>
-        <fileset dir="${log4j.libs.dir}">
+        <pathelement location="${log4j.lib}"/>
+        <pathelement location="${log.dir}"/>
+        <pathelement location="${deliverable_jar}"/>
+
+<!--        <fileset dir="${log4j.lib}">
           <include name="*.jar"/>
         </fileset>
+-->
     </path>
+	
+	<!-- get the source compile classpath in a printable form -->
+	<pathconvert pathsep="${line.separator}|   |-- "
+	         property="echo.path.compile"
+	         refid="project.class.path">
+	</pathconvert>
+	 
+	<!-- show classpath -->
+	<target name="print_classpath">
+	    <echo message="|-- The classpath is:"/>
+	    <echo message="|   |"/>
+	    <echo message="|   |-- ${echo.path.compile}"/>
+	</target>
+	
+    <!-- show current working dir -->
+	<target name="print_directory">
+	  <echo>current directory: ${user.dir}</echo>
+	</target>
+
 
     <target name="clean">
+    	<echo>${classpath}</echo>
         <delete dir="${build.dir}"/>
     </target>
 
@@ -30,7 +57,7 @@
 
     <target name="jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+        <jar destfile="${deliverable_jar}" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
@@ -38,10 +65,17 @@
     </target>
 
     <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+<!--        <antcall target="print_classpath"/>
+        <antcall target="print_directory"/>           -->
+<!--
+        <java jar="${deliverable_jar}" fork="true">
             <classpath refid="project.class.path"/>
-      	</java>
-    	
+hegb:You cannot run using "-jar". Refer to 
+http://www.coderanch.com/t/584413/java/java/java-lang-NoClassDefFoundError-thrown-running
+http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4648386
+        </java>
+-->
+        <java classname="${main-class}" classpathref="project.class.path" fork="true"/>
     </target>
 
     <target name="clean-build" depends="clean,jar"/>

@@ -1,12 +1,15 @@
 package com.ghe.exercise;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 public class HelloWorld {
-	private static final Logger logger = LogManager.getLogger("HelloWorld");
+	private static final Logger logger = Logger.getLogger(HelloWorld.class.getName());
 	public static void main(String[] args) {
-        System.out.println("Hello World me");
-        logger.info("Hello, World!");
+//        BasicConfigurator.configure();
+        logger.trace("Hello, World! said by trace");
+        logger.debug("Hello, World! said by debug");
+        logger.info("Hello, World! said by info");
+        System.out.println("--java.ext.dirs=" + System.getProperty("java.ext.dirs"));
+        System.out.println("Finished! Log file is in ${basedir}/log");
     }
 }
