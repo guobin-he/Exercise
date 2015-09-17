@@ -1,4 +1,4 @@
-<project name="Exercise" basedir="." default="test">
+<project name="Exercise" basedir="." default="junit">
 
     <property file="ant.properties" />
 
@@ -14,12 +14,14 @@
     <property name="main-class"  value="com.ghe.exercise.HelloWorld"/>
 
     <path id="project.class.path">
+        <pathelement location="${deliverable_jar}"/>
+        <pathelement location="${junit.lib}"/>
+        <pathelement location="${hamcrest.lib}"/>
         <pathelement location="${log4j.lib}"/>
         <pathelement location="${log.dir}"/>
-        <pathelement location="${deliverable_jar}"/>
 
 <!--        <fileset dir="${log4j.lib}">
-          <include name="*.jar"/>
+          <includes name="*.jar"/>
         </fileset>
 -->
     </path>
@@ -82,6 +84,15 @@ http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4648386
 
     <target name="main" depends="clean,run"/>
 
-    <target name="test" depends="run"/>
+    <target name="junit" depends="jar">
+        <junit printsummary="yes">
+            <classpath>
+                <path refid="project.class.path"/>
+            </classpath>
+            <batchtest fork="yes">
+                <fileset dir="${classes.dir}" includes="**/*Test.class"/>
+            </batchtest>
+        </junit>
+    </target>
 
 </project>
