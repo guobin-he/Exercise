@@ -1,3 +1,12 @@
+/* This class is created following the content on
+ * https://ant.apache.org/manual/tutorial-HelloWorldWithAnt.html
+ * The following topic are exercised:
+ * 1) create a Java Class "HelloWorld"
+ * 2) create a build.xml to build the project
+ * 3) Add log4j v1.2 for logging to stdout and a common log file
+ * 4) Add junit v4.12 and hamcrest v1.3 for unit testing
+ */
+
 package com.ghe.exercise;
 
 import org.apache.log4j.Logger;
