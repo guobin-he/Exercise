@@ -1,4 +1,4 @@
-<project name="Exercise" basedir="." default="junit">
+<project name="Exercise" basedir="." default="run">
 
     <property file="ant.properties" />
 
@@ -12,7 +12,7 @@
     <property name="log.dir"     value="${basedir}/log"/>
 	<property name="report.dir"  value="${build.dir}/junitreport"/>
 
-    <property name="main-class"  value="com.ghe.exercise.HelloWorld"/>
+    <property name="main-class"  value="com.ghe.exercise.Bar"/>
 
     <path id="project.class.path">
         <pathelement location="${deliverable_jar}"/>
@@ -92,8 +92,10 @@ http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4648386
             <classpath>
                 <path refid="project.class.path"/>
             </classpath>
-        	<formatter type="xml"/>
-            <batchtest fork="yes" todir="${report.dir}">
+        		<formatter type="xml"/>    <!-- junitreport need to choose this option -->
+        <!--    <formatter type="plain" usefile="false" />  -->  <!-- to screen -->
+        <!--    <formatter type="plain" /> --> <!-- to file -->
+        	<batchtest fork="yes" todir="${report.dir}">
                 <fileset dir="${classes.dir}" includes="**/*Test.class"/>
             </batchtest>
         </junit>
