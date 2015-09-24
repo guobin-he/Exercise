@@ -12,7 +12,7 @@
     <property name="log.dir"     value="${basedir}/log"/>
 	<property name="report.dir"  value="${build.dir}/junitreport"/>
 
-    <property name="main-class"  value="com.ghe.exercise.Bar"/>
+    <property name="main-class"  value="com.ghe.exercise.StringStudy"/>
 
     <path id="project.class.path">
         <pathelement location="${deliverable_jar}"/>
